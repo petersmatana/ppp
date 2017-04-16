@@ -1,4 +1,16 @@
-- zajit za Dr. Kolomaznikem a zeptat se co dal.
-  mame bez vlaken prevod do morzeovky tam a zpet
-- jaky pouzit sifty? na zacatek navrhuju pouzit
-  Cezarovu sifru, to pujde hezky paralelizovat
+ok - zajit za Dr. Kolomaznikem a zeptat se co dal.
+     mame bez vlaken prevod do morzeovky tam a zpet
+ok - jaky pouzit sifty? na zacatek navrhuju pouzit
+     Cezarovu sifru, to pujde hezky paralelizovat
+   - nakonec budeme paralelizovat sifrovani podle
+     klice
+
+Peter:
+- sifrovani souboru
+- mezery nahradit za nic
+- vse preves na male pismena
+- rozkouskovat vstup na mensi podmnoziny (musi se dat nastavit)
+
+Dobre praktiky
+- StringBuilder == neni t.s. Vice vlaken asi muze pristoupit?
+  StringBuffer == je thread-safe. Vice vlaken nemuze pristoupit 

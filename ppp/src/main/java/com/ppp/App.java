@@ -22,7 +22,7 @@ public class App {
 
 	static String testAlpha = "Hello World";
 	static String testMorse = ".... . .-.. .-.. --- | .-- --- .-. .-.. -..";
-
+	
 	public static void _main(String[] args) {
 		System.out.println(getAlphaStringToMorseString(testAlpha.toLowerCase()));
 		System.out.println(getMorseStringToAlphaString(testMorse));
