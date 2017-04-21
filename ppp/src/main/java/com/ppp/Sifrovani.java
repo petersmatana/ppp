@@ -6,13 +6,20 @@ public class Sifrovani {
 	private static String key = "ak";
 	// private static String text = "this is text";
 	private static String text = "abcdefghijklmnopqrstuvwxyz";
-	// private static String text = "zyxwvutsrqponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz";
+	private static String text2 = "zyxwvutsrqponmlkjihgfedcbaabcdefghijklmnopqrst";
 	
 	public static void main(String[] args) {
 		
 		FileProcessing fp = new FileProcessing();
-		String x = fp.loadFile("/home/smonty/Dropbox/zz_skola/4semestr/paralelko/projekt_repo/data/small_file");
-		System.out.println(fp.removeUndesirableChars(x));
+		//String x = fp.loadFile("/home/smonty/Dropbox/zz_skola/4semestr/paralelko/projekt_repo/data/small_file");
+		//System.out.println(fp.removeUndesirableChars(x));
+		//fp.splitText();
+		
+		
+		// System.out.println(text2.length());
+		
+		// fp.splitText(text, 7);
+		fp.splitText(text2, 7);
 		
 		
 		/*
