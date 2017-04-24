@@ -6,10 +6,15 @@ ok - jaky pouzit sifty? na zacatek navrhuju pouzit
      klice
 
 Peter:
-- sifrovani souboru
-- mezery nahradit za nic
-- vse preves na male pismena
-- rozkouskovat vstup na mensi podmnoziny (musi se dat nastavit)
+ok - sifrovani souboru
+?  - mezery nahradit za nic
+ok - vse preves na male pismena
+ok - rozkouskovat vstup na mensi podmnoziny (musi se dat nastavit)
+- refaktorovat kod, metoda go, smazat App.java, je to v gitu...
+- nastudovat jak funguje paralelizace v jave.
+
+Ciza:
+- skocit za Honzou!!
 
 Dobre praktiky
 - StringBuilder == neni t.s. Vice vlaken asi muze pristoupit?
