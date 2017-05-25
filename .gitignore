@@ -1,3 +1,4 @@
 ppp/.settings/
 ppp/.project
 data/*
+/Vigenere/target/
