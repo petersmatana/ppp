@@ -10,7 +10,7 @@ public class Sifrovani {
 	
 	public static void main(String[] args) {
 		
-		FileProcessing fp = new FileProcessing();
+		//FileProcessing fp = new FileProcessing();
 		//String x = fp.loadFile("/home/smonty/Dropbox/zz_skola/4semestr/paralelko/projekt_repo/data/small_file");
 		//System.out.println(fp.removeUndesirableChars(x));
 		//fp.splitText();
@@ -19,7 +19,7 @@ public class Sifrovani {
 		// System.out.println(text2.length());
 		
 		// fp.splitText(text, 7);
-		fp.splitText(text2, 7);
+		//fp.splitText(text2, 7);
 		
 		
 		/*
@@ -37,7 +37,7 @@ public class Sifrovani {
 		*/
 		
 		
-		// go();
+		go();
 		
 		/*
 		char znak = 'a';
