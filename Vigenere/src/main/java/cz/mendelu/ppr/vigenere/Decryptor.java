@@ -5,6 +5,8 @@
  */
 package cz.mendelu.ppr.vigenere;
 
+import java.util.List;
+
 /**
  *
  * @author LANeo
@@ -27,9 +29,31 @@ public class Decryptor {
         return result;
     }
 
-    private static int matchWordlist(String str, int keyLength, String filename) {
-        List<map<int, int percentage = 100;
-        return percentage;
+    public static float matchWordlist(String text, String filename){
+        MyDictionary dic = new MyDictionary(filename);
+        
+        List<String> found;
+        found = dic.findWordsRem(text); 
+                       
+        float length = 0F;
+        for (String sl: found){
+            length += sl.length();
+        }       
+        
+        return length/text.length();
+    }
+    
+    //pokud se chceme vyhnout opakovaného vytváření instance MyDictionary
+    public static float matchWordlist(String text, MyDictionary dic){        
+        List<String> nalezeno;        
+        nalezeno = dic.findWordsRem(text); 
+
+
+        float length = 0F;
+        for (String sl: nalezeno){
+            length += sl.length();
+        }         
+        return length/text.length();
     }
 
     private static boolean findKeyChar(String[] strArr, int keyLength) {
