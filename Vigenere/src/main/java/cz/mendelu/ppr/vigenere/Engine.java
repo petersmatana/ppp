@@ -5,92 +5,91 @@
  */
 package cz.mendelu.ppr.vigenere;
 
-import org.apache.commons.cli.*;
-//import org.apache.commons.cli.Options;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
 
 /**
  *
  * @author LANeo
  */
 public class Engine {
-    
-    private static String removeDiacritics(String str){
-        return "";
-    }
-    
-    private static String removeNonAlphabet(String str){
-        return "";
-    }
+
+    public static String lang = "CZ";
+    public static String encoding = "UTF-8";
+    public static final String plainPath = "./Text/plain/";
+    public static final String encPath = "./Text/encrypted/";
+    public static final String decPath = "./Text/decrypted/";
 
     /**
-     * 
+     *
      * @param args
-     * @throws Exception 
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        Options options = new Options();
-        options.addOption("V", false, "Verbose");
-        options.addOption("S", false, "Silent");
-        options.addOption("E", false, "Encrypt");
-        options.addOption("D", false, "Decrypt");
-        options.addOption("s", true, "string");
-        options.addOption("k", true, "key");
-        options.addOption("f", true, "filename");
-
-        //CommandLineParser parser = new DefaultParser();
-        CommandLineParser parser = new BasicParser();
-        CommandLine cmd = parser.parse(options, args);
-
-        if (cmd.hasOption("s") && cmd.hasOption("k")) {
-            String str = cmd.getOptionValue("s");
-            String key = cmd.getOptionValue("k");
-            String result = "";
-            if (cmd.hasOption("E")) {
-                if (!cmd.hasOption("S")) {
-                    System.out.println("Encrypting");
-                    if (cmd.hasOption("V")) {
-                        System.out.println("String: " + str);
-                        System.out.println("Key: " + key);
-                    }
-                }
-                result = Encryptor.Encrypt(str, key);
-            } else if (cmd.hasOption("D")) {
-                if (!cmd.hasOption("S")) {
-                    System.out.println("Decrypting");
-                    if (cmd.hasOption("V")) {
-                        System.out.println("String: " + str);
-                        System.out.println("Key: " + key);
-                    }
-                }
-                result = Decryptor.Decrypt(str, key);
+        final int chunk = 1000; // should be at least 500 for the frequency analysis to work
+        final int maxKeyLen = 20;
+        
+        String plainFile = "nesmysl.txt";
+        String key = "gurgle";
+        char[] cbuff = new char[chunk];
+        
+        // encrypt file
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(
+          new FileInputStream(new File(plainPath + plainFile)), encoding));
+                PrintWriter writer = new PrintWriter(encPath + "enc_" + plainFile, encoding)) {
+            int size = chunk; // can be any size
+            while (in.read(cbuff, 0, size) != -1) {
+                StringBuilder dataBuilder = new StringBuilder();
+                dataBuilder.append(cbuff);
+                String data = Stringer.RipDiacrit(dataBuilder.toString());
+                System.out.println(data);
+                writer.print(Encryptor.Encrypt(data, key));
             }
-            if (cmd.hasOption("f")) {
-                String fileName = cmd.getOptionValue("f");
-                //open file
-                //save stuff
-                //close file
-                if (!cmd.hasOption("S")){
-                    System.out.println("Result saved in file: "+fileName);
-                }
-            } else {
-                if (!cmd.hasOption("S")){
-                    System.out.println("Result:");
-                }
-                System.out.println(result);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        /*
+        try (BufferedReader in = new BufferedReader(new FileReader(plainPath + plainFile)); PrintWriter writer = new PrintWriter(encPath + "enc_" + plainFile, "UTF-8")) {
+            int size = chunk; // can be any size
+            while (in.read(cbuff, 0, size) != -1) {
+                String data = Stringer.RipDiacrit(cbuff.toString());
+                writer.print(Encryptor.Encrypt(data, key));
             }
-        } else {
-            System.out.println("No options on CL found.");
-            System.out.println("Entering interactive mode...");
-            char choice = 'x';
-            while (choice != 'e'){
-                //printmenu
-                //read
-                //switch do stuff
+        } catch (Exception e) {
+            System.err.println(e);
+        }*/
+        
+        // decrypt file
+        try (BufferedReader in = new BufferedReader(new FileReader(encPath + "enc_" + plainFile)); PrintWriter writer = new PrintWriter(decPath + "dec_" + plainFile, "UTF-8")) {
+            while (in.read(cbuff, 0, chunk) != -1) { 
+                String data = Stringer.RipDiacrit(Arrays.toString(cbuff));
+                writer.print(Decryptor.FreqDecrypt(data, maxKeyLen));
             }
+        } catch (Exception e) {
+            System.err.println(e);
         }
 
-        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("grump");
+        /*
+         String en = "When in the course of human events it becomes necessary for one people to dissolve the political bands which have connected them with another and to assume among the powers of the earth the separate and equal station to which the laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they declare the causes of their separation.";
+         String s = "Ahoj já jsem krtek, říkám krtek, protože jsem prostě krtek. Měli byste mě mít rádi a já budu mít rád vás. Když mi dáte pokoj, budu hodnej, jinak ale vemu lopatičku a zatluču vás do země. máte štěstí, že jsem takový lidumil a mám vás rád vy umaštění myslivci. Jednoho dne bude vše moje a vy budete lítat na letadlech. Nemyslete si, že vám to projde vy červení slimáci.";
+         String key = "ahoj";
+         Dictionary.SelectDictionary("CZ");
+         Frequency.SetLang("CZ");
+         //String enc = Encryptor.Encrypt(s, key);
+         String enc = Encryptor.Encrypt(Stringer.RipDiacrit(s), key);
+         System.out.println(s);
+         System.out.println(enc);
+        
+         String dec_f = Decryptor.FreqDecrypt(enc, 10);
+         System.out.println(dec_f);
+         String dec_d = Decryptor.DictDecrypt(enc, 10);
+         System.out.println(dec_d);
+         */
     }
 
 }
