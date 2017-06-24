@@ -2,7 +2,6 @@ ppp/.settings/
 ppp/.project
 data/*
 /Vigenere/target/
-/Vigenere/Text/*
 Vigenere/.classpath
 Vigenere/.project
 Vigenere/.settings/
