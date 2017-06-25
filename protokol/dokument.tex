@@ -1,0 +1,155 @@
+\documentclass{article}
+
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath}
+\usepackage{color}
+
+% sazeni zdrojaku
+\usepackage{listings}
+
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+ 
+\lstset{language=Java,
+basicstyle=\ttfamily,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javared},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{/**}{*/},
+numbers=left,
+numberstyle=\tiny\color{black},
+stepnumber=1,
+numbersep=10pt,
+tabsize=4,
+showspaces=false,
+showstringspaces=false}
+
+\title{Paralelní programování}
+\author{Robert Čížek, Lukáš Hlavatý, Peter Smatana}
+
+\begin{document}
+\maketitle
+
+\textbf{Zadání projektu}
+\newline
+Cílem projektu bylo vytvořit program který se snaží hrubou silou rozšifrovat šifrový text.
+Šifrový text je vytvořený pomocí Vigenèrovy šifry.
+\newline
+
+\textbf{Požadavky na softwarové vybavení}
+Projekt je vytvořený v progamovacím jazyku Java ve verzi 1.7. Pro vytvoření stuktury projektu,
+pro běh a tvorbu \textit{.jar} souborů používáme technologii Maven. Pro běh projektu je třeba
+mít nainstalované Java Runtime Environment. Pro práci na projektu je třeba mít Java Development
+Kit.
+\newline
+
+\textbf{Popis projektu}
+\newline
+Naše řešení je schopno text šifrovat i dešifrovat. Šifrování se provádí ve třídě
+\texttt{Encryptor} v metodě \texttt{Encrypt}. V této metodě iterujeme nad otevřeným textem
+a podle klíče jej šifrujeme. O to se stará třída \texttt{Alphabet}, která má metody
+\texttt{shiftUp} a \texttt{shiftDown}. Metoda \texttt{shiftUp} šifruje text podle klíče
+a metoda \texttt{shiftDown} dešifruje text podle klíče. Ve skutečnosti se jedná o hledání
+patřičného znaku ve Vigenèrově čtverci.
+
+Ve zdrojovém kódu č. 1 je vidět jak se pracuje Vigenèrovým čtvercem. Nalezení zašifrovaného znaku
+je přičtení ordinální pozice znaku klíče v ASCII tabulce.
+
+\begin{center}
+\begin{lstlisting}
+public static char shiftUp(char c, char key) {
+	int num = (int) c - 97;
+	if ((num >= 0) && (num <= 25)) {
+		num += (int) key - 97;
+		if (num > 25) {
+			num -= 26;
+		}
+		return alphabet.charAt(num);
+	} else {
+		return c;
+	}
+}
+\end{lstlisting}
+\vspace{1mm}
+\textit{Zdrojový kód č. 1: Šifrování znaku podle znaku v klíči.}
+\end{center}
+
+Pro dešifrování máme třídu \texttt{Decryptor} ve které jsou tři metody kde uplatňujeme
+odlišné přístupy na dešifrování. První metoda \texttt{KeyDecrypt} dešifruje text inverzně
+stejně jako je implementováno šifrování. Vezme šifrový text, klíč a obdobně jako v ukázce
+zdrojového kódu č. 1 dešifruje text. Druhý přistup reprezentuje metoda \texttt{FreqDecrypt},
+která provádá frekvenční analýzu. Frekvenční analýza je přístup, jak najít v šifrovém textu
+nějakou podobnost s přirozeným jazykem, ve kterém je zpráva napsaná. Poslední přístup je
+hledání klíče hrubou silou podle slovníku. Hádáme klíč, klíčem rozšifrováváme slovo a toto
+slovo hledáme ve slovníku.
+\newline
+
+\textbf{Paralelní vylepšení programu}
+\newline
+asd asd asd
+\newline
+
+\textbf{Měření}
+\newline
+takhle se delaji v \LaTeX u tabulky:
+\begin{tabular}{ l | c | r }
+  \hline			
+  1 & \textbf{xy} & 3 \\
+  \hline
+  \hline
+  4 & 5 & 6 \\
+  7 & 8 & 9 \\
+  \hline
+\end{tabular}
+
+\textbf{Závěr}
+\newline
+asd asd asd
+\newline
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
