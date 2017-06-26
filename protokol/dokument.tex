@@ -36,7 +36,7 @@ showstringspaces=false}
 \textbf{Zadání projektu}
 \newline
 Cílem projektu bylo vytvořit program který se snaží hrubou silou rozšifrovat šifrový text.
-Šifrový text je vytvořený pomocí Vigenèrovy šifry.
+Šifrovaný text je vytvořený pomocí Vigenèrovy šifry.
 \newline
 
 \textbf{Požadavky na softwarové vybavení}
@@ -81,7 +81,7 @@ Pro dešifrování máme třídu \texttt{Decryptor} ve které jsou tři metody k
 odlišné přístupy na dešifrování. První metoda \texttt{KeyDecrypt} dešifruje text inverzně
 stejně jako je implementováno šifrování. Vezme šifrový text, klíč a obdobně jako v ukázce
 zdrojového kódu č. 1 dešifruje text. Druhý přistup reprezentuje metoda \texttt{FreqDecrypt},
-která provádá frekvenční analýzu. Frekvenční analýza je přístup, jak najít v šifrovém textu
+která provádí frekvenční analýzu. Frekvenční analýza je přístup, jak najít v šifrovém textu
 nějakou podobnost s přirozeným jazykem, ve kterém je zpráva napsaná. Poslední přístup je
 hledání klíče hrubou silou podle slovníku. Hádáme klíč, klíčem rozšifrováváme slovo a toto
 slovo hledáme ve slovníku.
@@ -90,6 +90,18 @@ slovo hledáme ve slovníku.
 \textbf{Paralelní vylepšení programu}
 \newline
 asd asd asd
+\newline
+
+\textbf{Data}
+\newline
+\begin{tabular}{ l | l | l }
+  \textbf{název souboru} & počet znaků & počet slov \\
+  \hline
+  nesmysl.txt & 0 & 0 \\
+  pohadka.txt & 0 & 0 \\
+  shakespeare.txt 0 & 0 \\
+  \hline
+\end{tabular}
 \newline
 
 \textbf{Měření}
