@@ -27,7 +27,7 @@ tabsize=4,
 showspaces=false,
 showstringspaces=false}
 
-\title{Paralelní programování}
+\title{Paralelní programování - semestrální projekt}
 \author{Robert Čížek, Lukáš Hlavatý, Peter Smatana}
 
 \begin{document}
@@ -90,7 +90,8 @@ Paralelizaci jsme prováděli pro dešifrování textu. Šifrování jsme implem
 potřebu získání zašifrovaného textu.
 
 Dešifrování je provedeno rozdělením šifrovaného textu do částí které jsou následně
-předány vláknům. Vlákna nezávisle na sobě zpracovávají dané části a výsledky zapisují
+předány vláknům (viz zdrojový kód č. 2).
+Vlákna nezávisle na sobě zpracovávají dané části a výsledky zapisují
 do společné proměnné pomocí metod nebo do patřičného pole podle svého ID. Počet
 spuštěných vláken je závislý na délce šifrovaného textu.
 
@@ -130,19 +131,175 @@ public static String Encrypt(String text, String key){
 \begin{tabular}{ l | l | l }
   \textbf{název souboru} & počet znaků & počet slov \\
   \hline
-  blabol1k.txt & 0 & 0 \\
-  blabol10k.txt & 0 & 0 \\
-  blabol40k.txt 0 & 0 \\
+  blabol1k.txt & 1 134 & 147 \\
+  blabol10k.txt & 11 224 & 1 495 \\
+  blabol40k.txt & 44844 & 6005 \\
   \hline
 \end{tabular}
 \newline
 
 \section{Měření}
-{\color{red}todo}
+\begin{center}
+	\begin{tabular}{ c | c | c | c | c | c | c }
+		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
+		\hline
+		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
+		1 & 2,45 & 3,36 & 9,11 & 2,63 & 2,92 & 2,46 \\
+		\hline
+		2 & 2,51 & 3,10 & 8,88 & 2,55 & 2,29 & 2,66 \\
+		\hline
+		3 & 2,61 & 4,07 & 8,84 & 2,54 & 2,50 & 2,56 \\
+		\hline
+		4 & 3,03 & 3,46 & 9,79 & 2,60 & 2,46 & 2,69 \\
+		\hline
+		5 & 2,42 & 3,01 & 8,55 & 2,44 & 2,66 & 2,75 \\
+		\hline
+		6 & 2,46 & 3,27 & 8,48 & 2,41 & 2,43 & 2,63 \\
+		\hline
+		7 & 2,29 & 3,07 & 9,06 & 2,49 & 2,57 & 2,48 \\
+		\hline
+		8 & 2,87 & 3,65 & 8,58 & 2,52 & 2,53 & 2,66 \\
+		\hline
+		9 & 2,78 & 2,86 & 8,78 & 2,53 & 2,62 & 2,58 \\
+		\hline
+		10 & 2,50 & 3,43 & 8,82 & 2,46 & 2,43 & 2,71 \\
+		\hline
+		průměr & 2,59 & 3,33 & 8,89 & 2,52 & 2,54 & 2,62 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. X: KeyDecrypt}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ c | c | c | c | c | c | c }
+		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
+		\hline
+		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
+		1 & 2,95 & 3,04 & 6,29 & 2,81 & 2,93 & 2,72 \\
+		\hline
+		2 & 2,67 & 2,92 & 6,77 & 2,39 & 2,97 & 2,81 \\
+		\hline
+		3 & 2,79 & 2,82 & 6,16 & 2,55 & 2,57 & 2,79 \\
+		\hline
+		4 & 2,42 & 2,87 & 6,04 & 2,94 & 2,64 & 2,84 \\
+		\hline
+		5 & 2,41 & 2,75 & 6,04 & 2,42 & 2,95 & 2,68 \\
+		\hline
+		6 & 2,64 & 2,64 & 5,75 & 2,85 & 2,76 & 2,98 \\
+		\hline
+		7 & 2,44 & 2,88 & 5,85 & 2,97 & 2,65 & 2,90 \\
+		\hline
+		8 & 2,35 & 3,21 & 5,91 & 2,36 & 2,86 & 2,73 \\
+		\hline
+		9 & 2,50 & 2,91 & 5,43 & 2,47 & 2,75 & 2,95 \\
+		\hline
+		10 & 3,16 & 2,75 & 5,65 & 2,69 & 2,81 & 2,74 \\
+		\hline
+		průměr & 2,63 & 2,88 & 5,99 & 2,64 & 2,79 & 2,81 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. X: Encrypt}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ c | c | c | c | c | c | c }
+		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
+		\hline
+		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
+		1 & 3,38 & 21,05 & 283,92 & 3,11 & 19,62 & 254,40 \\
+		\hline
+		2 & 2,96 & 20,66 & 291,43 & 3,37 & 19,43 & 255,37 \\
+		\hline
+		3 & 3,04 & 20,30 & 281,26 & 2,74 & 18,67 & 253,65 \\
+		\hline
+		4 & 2,82 & 21,06 & 282,64 & 3,16 & 19,85 & 254,19 \\
+		\hline
+		5 & 3,23 & 20,46 & 281,37 & 2,85 & 18,67 & 253,87 \\
+		\hline
+		6 & 3,47 & 20,66 & 281,95 & 3,18 & 18,73 & 255,02 \\
+		\hline
+		7 & 2,96 & 21,09 & 284,34 & 3,06 & 18,45 & 254,41 \\
+		\hline
+		8 & 3,02 & 20,70 & 280,14 & 2,95 & 19,06 & 254,34 \\
+		\hline
+		9 & 3,31 & 20,79 & 281,35 & 2,86 & 18,63 & 254,41 \\
+		\hline
+		10 & 2,81 & 20,15 & 281,48 & 3,11 & 18,71 & 255,17 \\
+		\hline
+		průměr & 3,10 & 20,69 & 282,99 & 3,04 & 18,98 & 254,48 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. X: FreqDecrypt}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ c | c | c }
+		\multicolumn{3}{c}{\textbf{overhead}} \\
+		\hline
+		1k & 10k & 40k \\
+		\hline
+		2,66 & 2,50 & 2,58 \\
+		\hline
+		2,43 & 2,75 & 2,37 \\
+		\hline
+		2,47 & 2,45 & 2,76 \\
+		\hline
+		2,47 & 2,60 & 2,34 \\
+		\hline
+		2,42 & 2,85 & 2,50 \\
+		\hline
+		2,50 & 2,60 & 2,63 \\
+		\hline
+		3,14 & 2,40 & 2,33 \\
+		\hline
+		2,49 & 2,66 & 2,76 \\
+		\hline
+		2,41 & 2,46 & 2,29 \\
+		\hline
+		2,35 & 2,54 & 2,58 \\
+		\hline
+		2,54 & 2,58 & 2,51 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. X: cccccccc}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ c | c | c | c }
+		 & Enc & KD & FD \\
+		\hline
+		A 1k & 0,10 & -0,04 & 0,47 \\
+		\hline
+		A 10k & 0,30 & 0,45 & 17,81 \\
+		\hline
+		A 40k & 3,48 & 2,90 & 277,00 \\
+		\hline
+		T 1k & 0,11 & -0,13 & 0,40 \\
+		\hline
+		T 10k & 0,21 & -0,25 & 16,19 \\
+		\hline
+		T 40k & 0,30 & -0,20 & 251,67 \\
+		\hline
+		A-T 1k & -0,01 & 0,08 & 0,07 \\
+		\hline
+		A-T 10k & 0,09 & 0,70 & 1,62 \\
+		\hline
+		A-T 40k & 3,18 & 3,09 & 25,33 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. X: cccccccc}
+\end{center}
+
 
 \subsection{Použitý hardware}
 Tabulka č. X ukazuje, na jakém hardware projekt běžel. Přestože je hardware
-různě výkonný, na výsledky to prakticky nemělo vliv.
+různě výkonný, na výsledky to prakticky nemělo vliv. Za příčinu obdobných
+výsledků lze především považovat stejný počet procesorových jader, stejně
+tak jako absence technologie hyperthreading u starších procesorů značky Intel.
+Procesory se tak liší pouze v taktovaní, jež v paralelním zpracování nemá výrazný vliv.
 \newline
 \begin{center}
 	\begin{tabular}{ l | l }
@@ -151,9 +308,9 @@ různě výkonný, na výsledky to prakticky nemělo vliv.
 		\hline
 		Intel Pentium DualCore E6300 & 4BG DDR2 \\
 		\hline
-		Intel i5-3210 & 4GB DDR3 \\
+		Intel Core i3-2340UE & 4GB DDR3 \\
 		\hline
-		AMD Phenom X3 & 4GB DDR2 \\
+		AMD Phenom X2 & 4GB DDR2 \\
 	\end{tabular}
 	\newline
 	\textit{Tabulka č. X: Použitý hardware pro testování}
