@@ -5,7 +5,6 @@
  */
 package cz.mendelu.ppr.vigenere_paralel;
 
-import cz.mendelu.ppr.vigenere.Alphabet;
 import cz.mendelu.ppr.vigenere.Frequency;
 import cz.mendelu.ppr.vigenere.KeyMaster;
 import java.util.concurrent.CountDownLatch;
