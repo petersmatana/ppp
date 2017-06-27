@@ -43,7 +43,6 @@ public class Encryptor implements Runnable{
      */
     public static String Encrypt(String text, String key){
         sKey = key;
-        
         StringBuilder bld = new StringBuilder();
         String[] batch = Stringer.Split(text);
         Thread[] bank = new Thread[batch.length];

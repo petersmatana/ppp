@@ -5,7 +5,12 @@
  */
 package cz.mendelu.ppr.vigenere_paralel;
 
-import cz.mendelu.ppr.vigenere.*;
+import cz.mendelu.ppr.vigenere.Alphabet;
+import cz.mendelu.ppr.vigenere.Frequency;
+import cz.mendelu.ppr.vigenere.KeyMaster;
+import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class serves to decrypt given text, which is encrypted by Vigenere
@@ -15,7 +20,7 @@ import cz.mendelu.ppr.vigenere.*;
  *
  * @author LANeo
  */
-public class Decryptor {
+public class Decryptor{
 
     /**
      * This method decrypts a text with supplied key. It does not check the
@@ -26,13 +31,22 @@ public class Decryptor {
      * @return Decrypted string.
      */
     public static String KeyDecrypt(String encrypted, String key) {
-        int strLength = encrypted.length();
-        int keyLength = key.length();
-        String result = "";
-        for (int i = 0; i < strLength; i++) {
-            result += Alphabet.shiftDown(encrypted.charAt(i), key.charAt(i % keyLength));
+        String[] batch = Stringer.Split(encrypted);
+        Thread[] bank = new Thread[batch.length];
+        CountDownLatch count = new CountDownLatch(batch.length);
+        KeyDecryptor.SetBatch(batch.length);
+        for(int i = 0; i < batch.length; i++){
+            bank[i] = new Thread(new KeyDecryptor(batch[i], key, i, count));
+            bank[i].start();
         }
-        return result;
+        
+        try {
+            count.await();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Encryptor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return KeyDecryptor.GetText();
     }
 
     /**
@@ -51,17 +65,21 @@ public class Decryptor {
      * @return Decrypted string.
      */
     public static String FreqDecrypt(String encrypted, int maxKeyLen) {
-        String best = null;
+        //String best = null;
+        CountDownLatch count = new CountDownLatch(maxKeyLen);
+        Thread[] bank = new Thread[maxKeyLen];
         for (int keyLen = 1; keyLen <= maxKeyLen; keyLen++) {
-            String[] divided = Stringer.BrushString(encrypted, keyLen);
-            String[] decrypted = new String[keyLen];
-            for (int j = 0; j < keyLen; j++) {
-                decrypted[j] = Frequency.DeCaesar(divided[j], 'a', 'z');
-            }
-            String combined = Stringer.MergeString(decrypted);
-            best = Frequency.min(best, combined);
+            bank[keyLen-1] = new Thread(new FrequencyDecryptor(count, encrypted, keyLen));
+            bank[keyLen-1].start();
         }
-        return best;
+        
+        try {
+            count.await();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Decryptor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return FrequencyDecryptor.GetBest();
     }
 
     /**
@@ -88,56 +106,6 @@ public class Decryptor {
         } else {
             return "";
         }
-    }
-
-    /**
-     * @deprecated No longer viable idea. it is nonsense.
-     *
-     * @param encrypted
-     * @param keyLength
-     * @return
-     */
-    public static String KeyLenDecrypt(String encrypted, int keyLength) {
-        String key = KeyMaster.GenerateKey('a', keyLength);
-        String decrypted = "";
-        float match = 0;
-        while ((match < 90) && (key.length() == keyLength)) {
-            decrypted = KeyDecrypt(encrypted, key);
-            match = Dictionary.MatchVocabulary(decrypted);
-            key = KeyMaster.ShiftKeyUp(key);
-        }
-        if (match >= 90) {
-            return decrypted;
-        } else {
-            return "";
-        }
-    }
-
-    // TESTOVACI METODA BEHU!!! nepouzivat k ostre funkci. volana na konci engine main
-    public static void testit() {
-        String key = "password";
-        double match = 0;
-        int maxKeyLength = 10;
-        String s = "When in the course of human events it becomes necessary for one people to dissolve the political bands which have connected them with another and to assume among the powers of the earth the separate and equal station to which the laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they declare the causes of their separation.";
-        String e = Encryptor.Encrypt(s, key);
-        System.out.println(s);
-        System.out.println(e);
-        String d = FreqDecrypt(e, maxKeyLength);
-        System.out.println(d);
-        //Stringer.br
-
-        /*while ((match < 90) && (key.length() <= maxKeyLength)) {            
-         d = KeyDecrypt(e, key);
-         match = Dictionary.MatchText(s, d);
-            
-         System.out.print(match);
-         System.out.print(", ");
-         System.out.print(key);
-         System.out.print(", ");
-         System.out.println(d);
-         key = KeyMaster.ShiftKeyUp(key);
-         }*/
-        //String d = DictDecrypt(s, 10);
     }
 
 }

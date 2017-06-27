@@ -25,24 +25,19 @@ public class KeyMaster {
         return key;
     }
     
-    public static String GuessKey(String str, int maxKeyLength) {
-        String key = "";
-        return key;
-    }
-    
-    public static String BreakKey(String str, int maxKeyLength) {
-        String key = "";
-        return key;
-    }
-    
     /**
+     * This method computes key from a plain text and from text
+     * that is encrypted or vice versa.
      * 
-     * @param str
-     * @return 
+     * @param plainText Etalon text to be compared.
+     * @param mask Text that serves as a mask.
+     * @param maxKeyLength Maximum key length.
+     * @return The key with which plaintext was encrypted.
      */
-    public static int ComputeKeyLength(String str) {
-        int keyLength = 0;
-        return keyLength;
+    public static String ComputeKey(String plainText, String mask, int maxKeyLength) {
+        //String key = "";
+        throw new UnsupportedOperationException("Not implemented yet");
+        //return key;
     }
     
     /**
