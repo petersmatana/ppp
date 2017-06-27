@@ -86,37 +86,73 @@ slovo hledáme ve slovníku.
 \newline
 
 \section{Paralelní vylepšení programu}
-Při tvorbě paralelní optimalizace jsme museli identifikovat kritické momenty programu, které
-jsou náročné na dobu trvání výpočtu. {\color{red}Například vyhledávání ve slovníku nebo co jeste?}
-\newline
+Paralelizaci jsme prováděli pro dešifrování textu. Šifrování jsme implementovali pro
+potřebu získání zašifrovaného textu.
+
+Dešifrování je provedeno rozdělením šifrovaného textu do částí které jsou následně
+předány vláknům. Vlákna nezávisle na sobě zpracovávají dané části a výsledky zapisují
+do společné proměnné pomocí metod nebo do patřičného pole podle svého ID. Počet
+spuštěných vláken je závislý na délce šifrovaného textu.
+
+\begin{center}
+\begin{lstlisting}
+public static String Encrypt(String text, String key){
+	sKey = key;
+	StringBuilder result = new StringBuilder();
+	String[] batch = Stringer.Split(text);
+	Thread[] bank = new Thread[batch.length];
+	count = new CountDownLatch(batch.length);
+	sBatch = new String[batch.length];
+	for(int i = 0; i < batch.length; i++){
+		bank[i] = new Thread(new Encryptor(batch[i], i));
+		bank[i].start();
+	}
+	
+	try {
+		count.await();
+	} catch (InterruptedException ex) {
+		Logger.getLogger(
+			Encryptor.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	for (String s : sBatch) {
+		result.append(s);
+	}
+	return result.toString();
+}
+\end{lstlisting}
+\vspace{1mm}
+\textit{Zdrojový kód č. 2: Rozdělení textu a předání vláknům.}
+\end{center}
 
 \textbf{Data}
 \newline
 \begin{tabular}{ l | l | l }
   \textbf{název souboru} & počet znaků & počet slov \\
   \hline
-  nesmysl.txt & 0 & 0 \\
-  pohadka.txt & 0 & 0 \\
-  shakespeare.txt 0 & 0 \\
+  blabol1k.txt & 0 & 0 \\
+  blabol10k.txt & 0 & 0 \\
+  blabol40k.txt 0 & 0 \\
   \hline
 \end{tabular}
 \newline
 
-\textbf{Měření}
-\newline
-takhle se delaji v \LaTeX u tabulky:
-\begin{tabular}{ l | c | r }
-  \hline			
-  1 & \textbf{xy} & 3 \\
-  \hline
-  \hline
-  4 & 5 & 6 \\
-  7 & 8 & 9 \\
-  \hline
-\end{tabular}
+\section{Měření}
+{\color{red}todo}
 
 \subsection{Použitý hardware}
-{\color{red}todo}
+\begin{tabular}{ l | l }
+	\textbf{Procesor} & \textbf{Paměť} \\
+	\hline
+	\hline
+	Intel Pentium DualCore E6300 & 4BG RAM DDR2 \\
+	\hline
+	Intel i5-3210 & 4GB RAM DDR3 \\
+\end{tabular}
+
+\section{Práce na projektu}
+Na projektu se všichni členové týmu podíleli stejným dílem. Projekt jsme
+umístili na github: \texttt{https://github.com/petersmatana/ppp}
 
 \section{Závěr}
 {\color{red}todo}
