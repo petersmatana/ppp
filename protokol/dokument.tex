@@ -332,7 +332,7 @@ Na projektu se všichni členové týmu podíleli stejným dílem. Projekt jsme
 umístili na github: \texttt{https://github.com/petersmatana/ppp}
 
 \section{Závěr}
-Z výsledků je zřejmé, že samotná paralelizace nepřinesla příliš citelný rozdíl. Hlavní příčinou je paralelizace zpracování samotných částí textu - efekt zrychlení zpracování je zde závislý na velikosti souboru dat. Čím větší vstupní soubor bude, tím lepších výsledků aplikace v paralelním módu dosáhne.
+Z výsledků v tabulce č. 6 vyplývá, že časová náročnost algoritmu metody Encrypt a Keydecrypt je téměř totožná, ale u algoritmu metody FreqDecrypt je vidět, že její složitost je vyšši a tedy paralelizací ziskává největší časovou výhodu. Hlavní příčinou je paralelizace zpracování samotných částí textu - efekt zrychlení zpracování je zde závislý na velikosti souboru dat. Čím větší vstupní soubor bude, tím lepších výsledků aplikace v paralelním módu dosáhne.
 Alternativní možností paralelizace by pak mohlo být dešifrování (hledání) samotného šifrovacího klíče. V principu by se rozdělilo samotné hledání, včetně slovníkových operací na více vláken a tak by se zefektivnil proces opakovaného zpracování velkého množství kombinací. Takové zpracování by pak nebylo závislé navelikosti vstupního souboru, ale na použitém slovníku či množství možných kombinací šifrovacího klíče.
 
 \end{document}
