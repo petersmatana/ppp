@@ -126,24 +126,31 @@ public static String Encrypt(String text, String key){
 \textit{Zdrojový kód č. 2: Rozdělení textu a předání vláknům.}
 \end{center}
 
-\textbf{Data}
-\newline
-\begin{tabular}{ l | l | l }
-  \textbf{název souboru} & počet znaků & počet slov \\
-  \hline
-  blabol1k.txt & 1 134 & 147 \\
-  blabol10k.txt & 11 224 & 1 495 \\
-  blabol40k.txt & 44844 & 6005 \\
-  \hline
-\end{tabular}
-\newline
-
 \section{Měření}
+Používali jsme tři zdroje dat pro šifrování a dešifrování (viz tabulka č. 1).
+\begin{center}
+	\begin{tabular}{ c | c | c }
+	  \textbf{název souboru} & \textbf{počet znaků} & \textbf{počet slov} \\
+	  \hline
+	  \hline
+	  blabol1k.txt & 1 134 & 147 \\
+	  \hline
+	  blabol10k.txt & 11 224 & 1 495 \\
+	  \hline
+	  blabol40k.txt & 44844 & 6005 \\
+	  \hline
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. 1: Testovací data}
+\end{center}
+
+
 \begin{center}
 	\begin{tabular}{ c | c | c | c | c | c | c }
 		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
 		\hline
 		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
 		\hline
 		1 & 2,45 & 3,36 & 9,11 & 2,63 & 2,92 & 2,46 \\
 		\hline
@@ -168,7 +175,7 @@ public static String Encrypt(String text, String key){
 		průměr & 2,59 & 3,33 & 8,89 & 2,52 & 2,54 & 2,62 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: KeyDecrypt}
+	\textit{Tabulka č. 2: KeyDecrypt}
 \end{center}
 
 \begin{center}
@@ -176,6 +183,7 @@ public static String Encrypt(String text, String key){
 		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
 		\hline
 		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
 		\hline
 		1 & 2,95 & 3,04 & 6,29 & 2,81 & 2,93 & 2,72 \\
 		\hline
@@ -200,7 +208,7 @@ public static String Encrypt(String text, String key){
 		průměr & 2,63 & 2,88 & 5,99 & 2,64 & 2,79 & 2,81 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: Encrypt}
+	\textit{Tabulka č. 3: Encrypt}
 \end{center}
 
 \begin{center}
@@ -208,6 +216,7 @@ public static String Encrypt(String text, String key){
 		\textbf{číslo měření} & \multicolumn{3}{c|}{\textbf{lineární zpracování}} & \multicolumn{3}{|c}{\textbf{paralelní zpracování}} \\
 		\hline
 		& 1k & 10k & 40k & 1k & 10k & 40k \\
+		\hline
 		\hline
 		1 & 3,38 & 21,05 & 283,92 & 3,11 & 19,62 & 254,40 \\
 		\hline
@@ -232,44 +241,46 @@ public static String Encrypt(String text, String key){
 		průměr & 3,10 & 20,69 & 282,99 & 3,04 & 18,98 & 254,48 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: FreqDecrypt}
+	\textit{Tabulka č. 4: FreqDecrypt}
 \end{center}
 
 \begin{center}
-	\begin{tabular}{ c | c | c }
-		\multicolumn{3}{c}{\textbf{overhead}} \\
+	\begin{tabular}{ c | c | c | c }
+		\multicolumn{4}{c}{\textbf{overhead}} \\
 		\hline
-		1k & 10k & 40k \\
+		číslo měření & 1k & 10k & 40k \\
 		\hline
-		2,66 & 2,50 & 2,58 \\
 		\hline
-		2,43 & 2,75 & 2,37 \\
+		1 & 2,66 & 2,50 & 2,58 \\
 		\hline
-		2,47 & 2,45 & 2,76 \\
+		2 & 2,43 & 2,75 & 2,37 \\
 		\hline
-		2,47 & 2,60 & 2,34 \\
+		3 & 2,47 & 2,45 & 2,76 \\
 		\hline
-		2,42 & 2,85 & 2,50 \\
+		4 & 2,47 & 2,60 & 2,34 \\
 		\hline
-		2,50 & 2,60 & 2,63 \\
+		5 & 2,42 & 2,85 & 2,50 \\
 		\hline
-		3,14 & 2,40 & 2,33 \\
+		6 & 2,50 & 2,60 & 2,63 \\
 		\hline
-		2,49 & 2,66 & 2,76 \\
+		7 & 3,14 & 2,40 & 2,33 \\
 		\hline
-		2,41 & 2,46 & 2,29 \\
+		8 & 2,49 & 2,66 & 2,76 \\
 		\hline
-		2,35 & 2,54 & 2,58 \\
+		9 & 2,41 & 2,46 & 2,29 \\
 		\hline
-		2,54 & 2,58 & 2,51 \\
+		10 & 2,35 & 2,54 & 2,58 \\
+		\hline
+		průměr & 2,54 & 2,58 & 2,51 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: cccccccc}
+	\textit{Tabulka č. 5: cccccccc}
 \end{center}
 
 \begin{center}
 	\begin{tabular}{ c | c | c | c }
 		 & Enc & KD & FD \\
+		\hline
 		\hline
 		A 1k & 0,10 & -0,04 & 0,47 \\
 		\hline
@@ -290,12 +301,12 @@ public static String Encrypt(String text, String key){
 		A-T 40k & 3,18 & 3,09 & 25,33 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: cccccccc}
+	\textit{Tabulka č. 6: cccccccc}
 \end{center}
 
 
 \subsection{Použitý hardware}
-Tabulka č. X ukazuje, na jakém hardware projekt běžel. Přestože je hardware
+Tabulka č. 7 ukazuje, na jakém hardware projekt běžel. Přestože je hardware
 různě výkonný, na výsledky to prakticky nemělo vliv. Za příčinu obdobných
 výsledků lze především považovat stejný počet procesorových jader, stejně
 tak jako absence technologie hyperthreading u starších procesorů značky Intel.
@@ -313,7 +324,7 @@ Procesory se tak liší pouze v taktovaní, jež v paralelním zpracování nem�
 		AMD Phenom X2 & 4GB DDR2 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. X: Použitý hardware pro testování}
+	\textit{Tabulka č. 7: Použitý hardware pro testování}
 \end{center}
 
 \section{Práce na projektu}
@@ -321,6 +332,7 @@ Na projektu se všichni členové týmu podíleli stejným dílem. Projekt jsme
 umístili na github: \texttt{https://github.com/petersmatana/ppp}
 
 \section{Závěr}
-{\color{red}todo}
+Z výsledků je zřejmé, že samotná paralelizace nepřinesla příliš citelný rozdíl. Hlavní příčinou je paralelizace zpracování samotných částí textu - efekt zrychlení zpracování je zde závislý na velikosti souboru dat. Čím větší vstupní soubor bude, tím lepších výsledků aplikace v paralelním módu dosáhne.
+Alternativní možností paralelizace by pak mohlo být dešifrování (hledání) samotného šifrovacího klíče. V principu by se rozdělilo samotné hledání, včetně slovníkových operací na více vláken a tak by se zefektivnil proces opakovaného zpracování velkého množství kombinací. Takové zpracování by pak nebylo závislé navelikosti vstupního souboru, ale na použitém slovníku či množství možných kombinací šifrovacího klíče.
 
 \end{document}
