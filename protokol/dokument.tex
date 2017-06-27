@@ -126,6 +126,32 @@ public static String Encrypt(String text, String key){
 \textit{Zdrojový kód č. 2: Rozdělení textu a předání vláknům.}
 \end{center}
 
+\subsection{Použitý hardware}
+Tabulka č. 7 ukazuje, na jakém hardware projekt běžel. Přestože je hardware
+různě výkonný, na výsledky to prakticky nemělo vliv. Za příčinu obdobných
+výsledků lze především považovat stejný počet procesorových jader, stejně
+tak jako absence technologie hyperthreading u starších procesorů značky Intel.
+Procesory se tak liší pouze v taktovaní, jež v paralelním zpracování nemá výrazný vliv.
+\newline
+\begin{center}
+	\begin{tabular}{ l | l }
+		\textbf{Procesor} & \textbf{Paměť} \\
+		\hline
+		\hline
+		Intel Pentium DualCore E6300 & 4BG DDR2 \\
+		\hline
+		Intel Core i3-2340UE & 4GB DDR3 \\
+		\hline
+		AMD Phenom X2 & 4GB DDR2 \\
+	\end{tabular}
+	\newline
+	\textit{Tabulka č. 7: Použitý hardware pro testování}
+\end{center}
+
+\section{Práce na projektu}
+Na projektu se všichni členové týmu podíleli stejným dílem. Projekt jsme
+umístili na github: \texttt{https://github.com/petersmatana/ppp}
+
 \section{Měření}
 Používali jsme tři zdroje dat pro šifrování a dešifrování (viz tabulka č. 1).
 \begin{center}
@@ -301,38 +327,11 @@ Používali jsme tři zdroje dat pro šifrování a dešifrování (viz tabulka 
 		A-T 40k & 3,18 & 3,09 & 25,33 \\
 	\end{tabular}
 	\newline
-	\textit{Tabulka č. 6: cccccccc}
+	\textit{Tabulka č. 6: overhead}
 \end{center}
-
-
-\subsection{Použitý hardware}
-Tabulka č. 7 ukazuje, na jakém hardware projekt běžel. Přestože je hardware
-různě výkonný, na výsledky to prakticky nemělo vliv. Za příčinu obdobných
-výsledků lze především považovat stejný počet procesorových jader, stejně
-tak jako absence technologie hyperthreading u starších procesorů značky Intel.
-Procesory se tak liší pouze v taktovaní, jež v paralelním zpracování nemá výrazný vliv.
-\newline
-\begin{center}
-	\begin{tabular}{ l | l }
-		\textbf{Procesor} & \textbf{Paměť} \\
-		\hline
-		\hline
-		Intel Pentium DualCore E6300 & 4BG DDR2 \\
-		\hline
-		Intel Core i3-2340UE & 4GB DDR3 \\
-		\hline
-		AMD Phenom X2 & 4GB DDR2 \\
-	\end{tabular}
-	\newline
-	\textit{Tabulka č. 7: Použitý hardware pro testování}
-\end{center}
-
-\section{Práce na projektu}
-Na projektu se všichni členové týmu podíleli stejným dílem. Projekt jsme
-umístili na github: \texttt{https://github.com/petersmatana/ppp}
 
 \section{Závěr}
-Z výsledků v tabulce č. 6 vyplývá, že časová náročnost algoritmu metody Encrypt a Keydecrypt je téměř totožná, ale u algoritmu metody FreqDecrypt je vidět, že její složitost je vyšši a tedy paralelizací ziskává největší časovou výhodu. Hlavní příčinou je paralelizace zpracování samotných částí textu - efekt zrychlení zpracování je zde závislý na velikosti souboru dat. Čím větší vstupní soubor bude, tím lepších výsledků aplikace v paralelním módu dosáhne.
-Alternativní možností paralelizace by pak mohlo být dešifrování (hledání) samotného šifrovacího klíče. V principu by se rozdělilo samotné hledání, včetně slovníkových operací na více vláken a tak by se zefektivnil proces opakovaného zpracování velkého množství kombinací. Takové zpracování by pak nebylo závislé navelikosti vstupního souboru, ale na použitém slovníku či množství možných kombinací šifrovacího klíče.
+Z výsledků v tabulce č. 6 vyplývá, že časová náročnost algoritmu metody Encrypt a Keydecrypt je téměř totožná, ale u algoritmu metody FreqDecrypt je vidět, že její složitost je vyšší a tedy paralelizací ziskává největší časovou výhodu. Hlavní příčinou je paralelizace zpracování samotných částí textu - efekt zrychlení zpracování je zde závislý na velikosti souboru dat. Čím větší vstupní soubor bude, tím lepších výsledků aplikace v paralelním módu dosáhne.
+Alternativní možností paralelizace by pak mohlo být dešifrování (hledání) samotného šifrovacího klíče. V principu by se rozdělilo samotné hledání, včetně slovníkových operací na více vláken a tak by se zefektivnil proces opakovaného zpracování velkého množství kombinací. Takové zpracování by pak nebylo závislé na velikosti vstupního souboru, ale na použitém slovníku či množství možných kombinací šifrovacího klíče.
 
 \end{document}
